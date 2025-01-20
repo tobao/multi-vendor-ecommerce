@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from 'tailwindcss-animate';
 
 export default {
     darkMode: ["class"],
@@ -96,5 +97,7 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  //   plugins: [require("tailwindcss-animate")], ==>  require() là cú pháp của CommonJS, trong khi import là cú pháp của ES6 modules. Sử dụng import giúp mã nguồn của bạn tuân thủ các chuẩn hiện đại và dễ dàng hơn khi chuyển đổi giữa các môi trường khác nhau.
+plugins: [tailwindcssAnimate],
+
 } satisfies Config;
