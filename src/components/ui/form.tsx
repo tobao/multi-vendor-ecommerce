@@ -106,8 +106,12 @@ FormLabel.displayName = "FormLabel"
 const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
->(({ ...props }, ref) => {
+>(({ children,...props }, ref) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+
+  // Nếu có nhiều children, bọc chúng trong một thẻ <div>
+  const content =
+    React.Children.count(children) > 1 ? <div>{children}</div> : children;
 
   return (
     <Slot
@@ -120,7 +124,9 @@ const FormControl = React.forwardRef<
       }
       aria-invalid={!!error}
       {...props}
-    />
+    >
+      {content}
+    </Slot>
   )
 })
 FormControl.displayName = "FormControl"

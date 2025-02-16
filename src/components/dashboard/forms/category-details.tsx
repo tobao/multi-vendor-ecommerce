@@ -18,12 +18,14 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import ImageUpload from "../shared/image-upload";
 
 interface CategoryDetailsProps {
   data?: Category; // Dữ liệu danh mục, có thể có hoặc không
+  cloudinary_key: string; // Khóa cloudinary  
 }
 
-const CategoryDetails: FC<CategoryDetailsProps> = ({ data }) => {
+const CategoryDetails: FC<CategoryDetailsProps> = ({ data, cloudinary_key }) => {
   // Form hook for managing form state and validation
   const form = useForm<z.infer<typeof CategoryFormSchema>>({
     mode: "onChange", // Form validation mode
@@ -73,6 +75,32 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({ data }) => {
               className="space-y-4"
             >
               <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <ImageUpload
+                        type="profile"
+                        cloudinary_key={cloudinary_key}
+                        value={Array.isArray(field.value) ? field.value.map((image) => image.url) : []}
+                        disabled={isLoading}
+                        onChange={(url) =>
+                          field.onChange([...field.value, { url }])
+                        }
+                        onRemove={(url) =>
+                          field.onChange([
+                            ...(Array.isArray(field.value) ? field.value.filter((current) => current.url !== url) : []),
+                          ])
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage/>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
                 disabled={isLoading}
                 control={form.control}
                 name="name"
@@ -96,7 +124,7 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({ data }) => {
                     <FormControl>
                       <Input placeholder="/category-url" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage/>
                   </FormItem>
                 )}
               />
