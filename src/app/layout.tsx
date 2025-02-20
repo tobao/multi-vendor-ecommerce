@@ -16,6 +16,10 @@ import {
   // UserButton
 } from '@clerk/nextjs'
 
+
+import {Toaster} from "@/components/ui/toaster"
+import {Toaster as SonnerToaster} from "@/components/ui/sonner"
+
 //Fonts 
 const interFont = Inter({
   subsets: ["latin"],
@@ -52,6 +56,8 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Toaster/>
+            <SonnerToaster position="bottom-left"/>
           </ThemeProvider>
         </body>
       </html>

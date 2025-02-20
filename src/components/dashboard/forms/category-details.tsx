@@ -12,6 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 //Schema 
 import { CategoryFormSchema } from "@/lib/schemas";
+
+
 import { AlertDialog } from "@/components/ui/alert-dialog";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -20,12 +22,24 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import ImageUpload from "../shared/image-upload";
 
+//Queries
+import { upsertCategory } from "@/queries/category";
+
+//Utils
+import {v4} from 'uuid'
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+
 interface CategoryDetailsProps {
   data?: Category; // Dữ liệu danh mục, có thể có hoặc không
   cloudinary_key: string; // Khóa cloudinary  
 }
 
 const CategoryDetails: FC<CategoryDetailsProps> = ({ data, cloudinary_key }) => {
+  //Initializing necessary hooks
+  const { toast } = useToast(); //Hook for displaying toast messages
+  const router = useRouter()
+
   // Form hook for managing form state and validation
   const form = useForm<z.infer<typeof CategoryFormSchema>>({
     mode: "onChange", // Form validation mode
@@ -55,7 +69,42 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({ data, cloudinary_key }) => 
 
   // Submit handler for form submission
   const handleSubmit = async (values: z.infer<typeof CategoryFormSchema>) => {
-    console.log(values);
+    try {
+      // Upserting category data
+      const response = await upsertCategory({
+        id: data?.id ? data.id : v4(),
+        name: values.name,
+        image: values.image[0].url,
+        url: values.url,
+        featured: values.featured,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      // Displaying success message
+      toast({
+        title: data?.id
+          ? "Category has been updated."
+          : `Congratulations! '${response?.name}' is now officially created.`,
+      });
+
+      // Redirect or Refresh data
+      if (data?.id) {
+        router.refresh();
+      } else {
+        router.push("/dashboard/admin/categories");
+      }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      // Displaying error message
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Oops!",
+        description: error.toString(),
+      });
+    }
   };
   
   return (
