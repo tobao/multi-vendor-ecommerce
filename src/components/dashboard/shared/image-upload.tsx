@@ -12,8 +12,7 @@
     onRemove: (value: string) => void;
     value: string[];
     type?: "standard" | "profile" | "cover";
-    dontShowRemove?: boolean;
-    cloudinary_key: string;
+    dontShowPreview?: boolean;
   }
 
   const ImageUpload: FC<ImageUploadProps> = ({ 
@@ -22,8 +21,7 @@
     onRemove, 
     value, 
     type,
-    dontShowRemove,
-    cloudinary_key
+    dontShowPreview,
   }) => {
     const [isMounted, setIsMounted] = useState(false);
 
@@ -41,7 +39,7 @@
 
     if(type === "profile") 
     {
-      return <div className = "relative rounded-full w-52 h-52 inset-x-96 bg-gray-200 border-2 border-white shadow-2xl">
+      return <div className = "relative rounded-full w-52 h-52 bg-gray-200 border-2 border-white shadow-2xl">
         {value.length > 0 && (
           <Image
             src={value[0]}
@@ -52,7 +50,7 @@
           />
         )}
         {/* Nút Upload */}
-        <CldUploadWidget uploadPreset={cloudinary_key} onSuccess={onUpload}>
+        <CldUploadWidget uploadPreset="vhvfrywf" onSuccess={onUpload}>
           {({ open }) => {
             const onClick = () => {
               open();

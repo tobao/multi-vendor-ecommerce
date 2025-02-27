@@ -32,10 +32,9 @@ import { useRouter } from "next/navigation";
 
 interface CategoryDetailsProps {
   data?: Category; // Dữ liệu danh mục, có thể có hoặc không
-  cloudinary_key: string; // Khóa cloudinary  
 }
 
-const CategoryDetails: FC<CategoryDetailsProps> = ({ data, cloudinary_key }) => {
+const CategoryDetails: FC<CategoryDetailsProps> = ({ data }) => {
   //Initializing necessary hooks
   const { toast } = useToast(); //Hook for displaying toast messages
   const router = useRouter()
@@ -131,7 +130,6 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({ data, cloudinary_key }) => 
                     <FormControl>
                       <ImageUpload
                         type="profile"
-                        cloudinary_key={cloudinary_key}
                         value={Array.isArray(field.value) ? field.value.map((image) => image.url) : []}
                         disabled={isLoading}
                         onChange={(url) =>

@@ -21,7 +21,7 @@ type Props = {
 
 const CustomModal = ({ children, defaultOpen, subheading, heading }: Props) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { isOpen, setOpen, setClose } = useModal();
+  const { isOpen, setClose } = useModal();
 
   return (
     <Dialog open={isOpen || defaultOpen} onOpenChange={setClose}>
@@ -31,8 +31,8 @@ const CustomModal = ({ children, defaultOpen, subheading, heading }: Props) => {
             <DialogTitle className="text-2xl font-bold">{heading}</DialogTitle>
           )}
           {subheading && <DialogDescription>{subheading}</DialogDescription>}
+          {children}
         </DialogHeader>
-        {children}
       </DialogContent>
     </Dialog>
   );

@@ -54,6 +54,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 // Prisma models
 import { Category } from "@prisma/client";
+import { deleteCategory, getCategory } from "@/queries/category";
 
 
 export const columns: ColumnDef<Category>[] = [
@@ -154,11 +155,11 @@ const CellActions: React.FC<CellActionsProps> = ({ rowData }) => {
               // Custom modal component
                 <CustomModal subheading={""}>
                   {/* Store details component */}
-                  <CategoryDetails cloudinary_key="" data={{ ...rowData }} />
+                  <CategoryDetails data={{ ...rowData }} />
                 </CustomModal>,
                 async () => {
                   return {
-                    // rowData: await getCategory(rowData.id),
+                    rowData: await getCategory(rowData?.id),
                   };
                 }
               );
@@ -191,7 +192,7 @@ const CellActions: React.FC<CellActionsProps> = ({ rowData }) => {
             className="bg-destructive hover:bg-destructive mb-2 text-white"
             onClick={async () => {
               setLoading(true);
-              // await deleteCategory(rowData.id);
+              await deleteCategory(rowData.id);
               toast({
                 title: "Deleted category",
                 description: "The category has been deleted.",

@@ -5,6 +5,7 @@ import { getAllCategories } from "@/queries/category";
 import DataTable from "@/components/ui/data-table";
 import { Plus } from "lucide-react";
 import CategoryDetails from "@/components/dashboard/forms/category-details";
+import { columns } from "./column";
 
 export default async function AdminCategoriesPage() {
   // Fetching stores data from the database
@@ -12,9 +13,6 @@ export default async function AdminCategoriesPage() {
 
   // Checking if no categories are found
   if (!categories) return null; // If no categories found, return null
-
-  const CLOUDINARY_CLOUD_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
-  if (!CLOUDINARY_CLOUD_KEY) return null;
 
   return (
     <DataTable
@@ -26,13 +24,13 @@ export default async function AdminCategoriesPage() {
         </>
         
       }
-      modalChildren={
-        <CategoryDetails cloudinary_key={CLOUDINARY_CLOUD_KEY} />
-      }
+
+      modalChildren={<CategoryDetails/>}
+
       filterValue="name"
       data={categories}
       searchPlaceholder="Search category name..."
-      columns={[]}
+      columns={columns}
     />
   );
 }

@@ -84,17 +84,14 @@ export default function DataTable<TData, TValue>({
           <Button
             className="flex gap-2"
             onClick={() => {
-              if (modalChildren) setOpen(
-                <CustomModal
-                  heading={heading || ""}
-                  subheading={subheading || ""}
-                >
-                  {modalChildren}
-                </CustomModal>,
-                async () => {
-                  // Add your fetch data logic here
-                  return Promise.resolve();
-                }
+              if (modalChildren) 
+                setOpen(
+                  <CustomModal
+                    heading={heading || ""}
+                    subheading={subheading || ""}
+                  >
+                    {modalChildren}
+                  </CustomModal>,                
               );
             }}
           >
