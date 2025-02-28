@@ -92,7 +92,7 @@ export const columns: ColumnDef<Category>[] = [
     accessorKey: "url",
     header: "URL",
     cell: ({ row }) => {
-      return <span>{row.original.url}</span>;
+      return <span>/{row.original.url}</span>;
     },
   },
 
