@@ -1,7 +1,35 @@
-import React from 'react'
+// Data table
+import DataTable from "@/components/ui/data-table";
 
-export default function AdminSubCategoriesPage() {
+// Queries
+import { getAllCategories } from "@/queries/category";
+import { getAllSubCategories } from "@/queries/subCategory";
+import { Plus } from "lucide-react";
+
+import SubCategoryDetails from "@/components/dashboard/forms/subCategory-details";
+import { columns } from "./column";
+
+export default async function AdminSubCategoriesPage() {
+  // Fetching subCategories data from the database
+  const subCategories = await getAllSubCategories();
+
+  // Checking if no subCategories are found
+  if (!subCategories) return null; // If no subCategories found, return null
+
+  // Fetching categories data from the database
+  const categories = await getAllCategories();
+
   return (
-    <div>Subcategories Page</div>
-  )
+    <DataTable
+      actionButtonText={<>
+        <Plus size={15} />
+        Create SubCategory
+      </>}
+      modalChildren={<SubCategoryDetails categories={categories} />}
+      filterValue="name"
+      data={subCategories}
+      searchPlaceholder="Search subCategory name..."
+      columns={columns} 
+      heading={""}    />
+  );
 }
