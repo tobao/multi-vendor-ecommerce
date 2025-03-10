@@ -67,3 +67,71 @@ export const adminDashboardSidebarOptions:DashboardSidebarMenuInterface[] = [
     link:"/dashboard/admin/subCategories"
   }
 ];
+
+export const sellerDashboardSidebarOptions:DashboardSidebarMenuInterface[] = [
+  {
+    label: "Dashboard",
+    icon: "dashboard",
+    link: "",
+  },
+  {
+    label: "Store",
+    icon: "store",
+    link: "store",
+  },
+  {
+    label: "Create Store",
+    icon: "create-store",
+    link: "create-store",
+  },
+  {
+    label: "Box List",
+    icon: "box-list",
+    link: "box-list",
+  },
+  {
+    label: "Boxes",
+    icon: "boxes",
+    link: "boxes",
+  },
+  {
+    label: "Categories",
+    icon: "categories",
+    link: "categories",
+  },
+  {
+    label: "Settings",
+    icon: "settings",
+    link: "settings",
+  },
+  {
+    label: "Three Boxes",
+    icon: "three-boxes",
+    link: "three-boxes",
+  },
+  {
+    label: "Products",
+    icon: "products",
+    link: "products",
+  },
+  {
+    label: "Inventory",
+    icon: "inventory",
+    link: "inventory",
+  },
+  {
+    label: "Coupon",
+    icon: "coupon",
+    link: "coupon",
+  },
+  {
+    label: "Shipping",
+    icon: "shipping",
+    link: "shipping",
+  },
+  {
+    label:"Subcategories",
+    icon:"sub-categories",
+    link:"subCategories"
+  }
+];
